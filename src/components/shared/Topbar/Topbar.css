@@ -1,0 +1,8 @@
+.goleft{
+    left:-100%;
+    transition: .5s;
+}
+.goright{
+    transition: .5s;
+    left: 0;
+}
