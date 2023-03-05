@@ -10,13 +10,13 @@ const WishList = () => {
     const { user } = useAuth();
     const email = user.email;
     useEffect(() => {
-        fetch(`https://rafcart.herokuapp.com/wishlist/${email}`)
+        fetch(`https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlist/${email}`)
             .then(res => res.json())
             .then(data => setWishListProduct(data))
     }, [email]);
 
     const handleWishListProductDelete = (id) => {
-        fetch(`https://rafcart.herokuapp.com/wishlist/${id}`, {
+        fetch(`https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlist/${id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'

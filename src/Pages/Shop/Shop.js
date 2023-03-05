@@ -20,7 +20,7 @@ const Shop = () => {
     const [filteredProduct,setFilteredProduct]=useState([]);
     const [filterBy, setFilterBy] = useState([]);
     useEffect(() => {
-        fetch('https://rafcart.herokuapp.com/products')
+        fetch('https://rafcart-ecommerce-server-tanjidulahad.vercel.app/products')
             .then(res => res.json())
             .then(data => {
                 setallProducts(data);

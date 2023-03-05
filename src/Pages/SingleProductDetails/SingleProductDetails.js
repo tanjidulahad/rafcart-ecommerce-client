@@ -16,7 +16,7 @@ const SingleProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
     const [product,setProduct]=useState({});
     useEffect(()=>{
-        fetch(`https://rafcart.herokuapp.com/product/${id}`)
+        fetch(`https://rafcart-ecommerce-server-tanjidulahad.vercel.app/product/${id}`)
         .then(res=>res.json())
         .then(data=>setProduct(data))
     },[])

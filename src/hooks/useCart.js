@@ -7,7 +7,7 @@ const useCart = () => {
     useEffect(() => {
         const savedCart = getStoredCart();
         const keys = Object.keys(savedCart);
-        fetch('https://rafcart.herokuapp.com/products/byKeys', {
+        fetch('https://rafcart-ecommerce-server-tanjidulahad.vercel.app/products/byKeys', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

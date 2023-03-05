@@ -1,6 +1,6 @@
 // export const wishlistAdder=()=>{
 //     const addToWishList=(data)=>{
-//         fetch("https://rafcart.herokuapp.com/wishlists",{
+//         fetch("https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlists",{
 //             method: 'POST',
 //             headers: {
 //                 'content-type': 'application/json'

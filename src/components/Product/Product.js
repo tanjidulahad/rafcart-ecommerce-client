@@ -18,7 +18,7 @@ const Product = ({product,setCartCount}) => {
         }
         else{
         const data={email:user.email,productId:_id,productImg,productTitle,productPrice};
-        fetch("https://rafcart.herokuapp.com/wishlists",{
+        fetch("https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlists",{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
