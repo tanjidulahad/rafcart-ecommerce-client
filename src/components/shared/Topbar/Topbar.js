@@ -8,7 +8,7 @@ const Topbar = ({ cartLength }) => {
     const { user } = useAuth();
     const email = user.email;
     useEffect(() => {
-        fetch(`https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlist/${email}`)
+        fetch(`https://rafcart-server.onrender.com/wishlist/${email}`)
             .then(res => res.json())
             .then(data => setWishListCount(data.length))
     }, [email])

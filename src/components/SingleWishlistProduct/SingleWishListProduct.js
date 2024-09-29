@@ -1,8 +1,10 @@
+import { useStoreActions } from 'easy-peasy';
 import React from 'react';
 
 
 const SingleWishListProduct = ({product,handleWishListProductDelete}) => {
     const {_id,productImg,productPrice,productTitle}=product;
+    const {addToCart}=useStoreActions(actions=>actions)
     return (
         <div class="flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
             <div class="w-28 flex-shrink-0">
@@ -17,8 +19,8 @@ const SingleWishListProduct = ({product,handleWishListProductDelete}) => {
             <div class="">
                 <p class="text-primary text-lg font-semibold">{productPrice}</p>
             </div>
-            <a href="#"
-                class="ml-auto md:ml-0 block px-6 py-2 text-center text-sm text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
+            <a onClick={()=>addToCart(product)}
+                class="ml-auto md:ml-0 block px-6 py-2 text-center text-sm text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium cursor-pointer">
                 Add to cart
             </a>
             <div onClick={()=>handleWishListProductDelete(_id)} class="text-gray-600 hover:text-primary cursor-pointer">

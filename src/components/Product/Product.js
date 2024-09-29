@@ -5,8 +5,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../../context/useAuth/useAuth';
 import { addToDb, getStoredCart } from '../../utilities/localStorage/localStorage';
+import { useStoreActions } from 'easy-peasy';
 // import product4 from '../../images/products/product4.jpg';
 const Product = ({product,setCartCount}) => {
+    const addToCart=useStoreActions((actions)=>actions.addToCart)
     const {_id,productTitle,productsubTitle,productImg,productPrice,rating,ratingGiven}=product;
     const {user}=useAuth();
 
@@ -18,7 +20,7 @@ const Product = ({product,setCartCount}) => {
         }
         else{
         const data={email:user.email,productId:_id,productImg,productTitle,productPrice};
-        fetch("https://rafcart-ecommerce-server-tanjidulahad.vercel.app/wishlists",{
+        fetch("https://rafcart-server.onrender.com/wishlists",{
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -41,12 +43,13 @@ const Product = ({product,setCartCount}) => {
     }
     }
 
-    const handleAddToCart=id=>{
-        addToDb(id);
-        const cart=getStoredCart();
-        var size = Object.values(cart).reduce((a, b) => a + b,0);
-        setCartCount(size);
-    }
+    // const handleAddToCart=id=>{
+    //     addToDb(id);
+    //     const cart=getStoredCart();
+    //     var size = Object.values(cart).reduce((a, b) => a + b,0);
+    //     setCartCount(size);
+    // }
+
 
     return (        
         <div className="bg-white shadow rounded overflow-hidden group">
@@ -85,7 +88,7 @@ const Product = ({product,setCartCount}) => {
             </div> 
                                  
         </div> 
-        <button onClick={()=>handleAddToCart(_id)} className="uppercase bg-primary w-full block py-1 text-center text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add to cart</button>
+        <button onClick={()=>addToCart(product)} className="uppercase bg-primary w-full block py-1 text-center text-white border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add to cart</button>
     </div>
     );
 };

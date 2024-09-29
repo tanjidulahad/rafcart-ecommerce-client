@@ -8,31 +8,47 @@ import product2 from '../../images/products/product2.jpg';
 import product3 from '../../images/products/product3.jpg';
 import product4 from '../../images/products/product4.jpg';
 import product5 from '../../images/products/product5.jpg';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+
+const productImages=[product1,product2,product3,product4,product5]
 
 const SingleProductDetails = () => {
     window.scrollTo({top:0});
     const {id}=useParams();
-    console.log(id);
     const [quantity, setQuantity] = useState(1);
     const [product,setProduct]=useState({});
+    const [activeImg,setActiveImg]=useState("")
     useEffect(()=>{
-        fetch(`https://rafcart-ecommerce-server-tanjidulahad.vercel.app/product/${id}`)
+        fetch(`https://rafcart-server.onrender.com/product/${id}`)
         .then(res=>res.json())
-        .then(data=>setProduct(data))
+        .then(data=>{
+            setProduct(data)
+            setActiveImg(data.productImg)
+
+        })
     },[])
+
+    const {totalQuantity}=useStoreState((state)=>state)
+    const {addToCart}=useStoreActions(actions=>actions)
     return (
         <>
-            <Topbar></Topbar>
+            <Topbar cartLength={totalQuantity}></Topbar>
             <NavBar></NavBar>
             <div className="container grid md:grid-cols-2 gap-6 mt-4 mb-12">
                 <div>
-                    <img src={product.productImg} alt="" className="w-full"></img>
+                    <img src={activeImg} alt="" className="w-full"></img>
                     <div className="grid grid-cols-5 gap-4 mt-4">
-                        <img src={product1} className="w-full cursor pointer border border-primary"></img>
+                        {
+                            productImages?.map((image,idx)=>(
+                                <img src={image} onClick={()=>setActiveImg(image)} className={`w-full cursor pointer border ${activeImg==image && "border border-primary"}`}></img>
+                            ))
+                        }
+
+                        {/* <img src={product1} className="w-full cursor pointer border border-primary"></img>
                         <img src={product2} className="w-full cursor pointer border"></img>
                         <img src={product3} className="w-full cursor pointer border"></img>
                         <img src={product4} className="w-full cursor pointer border"></img>
-                        <img src={product5} className="w-full cursor pointer border"></img>
+                        <img src={product5} className="w-full cursor pointer border"></img> */}
 
                     </div>
                 </div>
@@ -83,7 +99,7 @@ const SingleProductDetails = () => {
                         </div>
                     </div>
                     <div class="flex gap-3 border-b border-gray-200 pb-5 mt-6">
-                        <a href="#" class="bg-primary border border-primary text-white md:px-8 py-2 px-6 font-medium rounded uppercase 
+                        <a onClick={()=>addToCart(product)} class="cursor-pointer bg-primary border border-primary text-white md:px-8 py-2 px-6 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-primary transition text-sm flex items-center">
                             <span class="mr-2"><i class="fas fa-shopping-bag"></i></span> Add to cart
                         </a>

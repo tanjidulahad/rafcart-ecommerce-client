@@ -4,12 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/useAuth/useAuth';
 import NavBar from '../shared/NavBar/NavBar';
 import Topbar from '../shared/Topbar/Topbar';
+import { useStoreState } from 'easy-peasy';
 
 const Login = () => {
     const {signInWithGoogle}=useAuth();
+    const {totalQuantity}=useStoreState((state)=>state)
     return (
         <>
-            <Topbar></Topbar>
+            <Topbar cartLength={totalQuantity}></Topbar>
             <NavBar></NavBar>
             <div className="container py-16">
                 <div className="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">

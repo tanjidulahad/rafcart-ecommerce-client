@@ -11,29 +11,28 @@ import SingleCart from '../../components/SingleCart/SingleCart';
 import useCart from '../../hooks/useCart';
 import Spinner from '../../components/Spinner/Spinner';
 import { Link } from 'react-router-dom';
+import { useStoreState } from 'easy-peasy';
 const Cart = () => {
-    const carts = getStoredCart();
-    var size = Object.values(carts).reduce((a, b) => a + b, 0);
-    const [cartCount, setCartCount] = useState(size)
-    const [cart, setCart] = useCart();
-    const handleCartDelete=(id)=>{
-        removeFromDb(id);
-        const carts = cart.filter(cart=>cart._id!==id);
-        setCart(carts);
-        const storedcart = getStoredCart();
-        var size = Object.values(storedcart).reduce((a, b) => a + b, 0);
-        setCartCount(size);
-        toast.success("Item Removed From Cart!", {
-            position: toast.POSITION.TOP_RIGHT
-          });
+    // const carts = getStoredCart();
+    // var size = Object.values(carts).reduce((a, b) => a + b, 0);
+    // const [cartCount, setCartCount] = useState(size)
+    // const [cart, setCart] = useCart();
+    const handleCartDelete = (id) => {
+        //     removeFromDb(id);
+        //     const carts = cart.filter(cart=>cart._id!==id);
+        //     setCart(carts);
+        //     const storedcart = getStoredCart();
+        //     var size = Object.values(storedcart).reduce((a, b) => a + b, 0);
+        //     setCartCount(size);
+        //     toast.success("Item Removed From Cart!", {
+        //         position: toast.POSITION.TOP_RIGHT
+        //       });
     }
 
-    const totalPrice=()=>{
-        const allPrice=cart.map(item=>parseInt(item.productPrice.replace("$", ""))*item.quantity);
-        const totalPrice=allPrice.reduce((a,b)=>a+b, 0);
-        return totalPrice;
-    }
-    const grandTotal=totalPrice();
+
+    const cartCount = useStoreState((state) => state.totalQuantity)
+    const grandTotal = useStoreState((state) => state.grandTotal)
+    const cart = useStoreState((state) => state.cart)
 
     return (
         <>
@@ -53,15 +52,21 @@ const Cart = () => {
                     {/* <!-- cart title end --> */}
 
                     {/* <!-- shipping carts --> */}
-                    {cart.length ? <div class="space-y-4">
+                    {cartCount ? <div class="space-y-4">
                         {/* <!-- single cart --> */}
                         {cart.map(cartitem => <SingleCart handleCartDelete={handleCartDelete} cartItem={cartitem}></SingleCart>)}
                         {/* <!-- single cart end --> */}
                     </div>
-                        :<>
-                        <Spinner></Spinner>
-                        <p className="text-center mt-4 font-medium text-xl text-red-800">Nothing to Show Here</p>
-                        </> 
+                        : <>
+                            {/* <Spinner></Spinner> */}
+                            <p className="text-center mt-4 font-medium text-xl text-red-800">Your Cart is Empty</p>
+                            <div className='text-center mt-4'>
+                                <Link to={`/shop`} class="bg-primary border border-primary text-white px-4 py-2 font-medium rounded-md hover:bg-transparent hover:text-primary transition text-sm text-center">
+                                    Go to Shop
+                                </Link>
+
+                            </div>
+                        </>
                     }
                     {/* <!-- shipping carts end --> */}
                 </div>

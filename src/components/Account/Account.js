@@ -8,25 +8,30 @@ import { Link } from 'react-router-dom';
 import ManageAccount from '../ManageAccount/ManageAccount';
 import WishList from '../WishList/WishList';
 import useAuth from '../../context/useAuth/useAuth';
+import { useStoreState } from 'easy-peasy';
+import { useLocation } from 'react-router-dom';
 const Account = () => {
     // let { path, url } = useRouteMatch();
     const {user,logOut}=useAuth();
     const avatar=user.photoURL;
-    console.log(user);
-    const addActiveClass = e => {
-        const div = document.getElementById('sidebarlinkdiv');
-        const alinks = div.getElementsByTagName('a');
-        Object.entries(alinks).map(link => {
-            if(link[1].classList.contains("text-primary")){
-                link[1].classList.remove("text-primary");
-            }
-            });
-        e.target.classList.add("text-primary");
-    }
+    const location = useLocation()
+    console.log(location)
+
+    // const addActiveClass = e => {
+    //     const div = document.getElementById('sidebarlinkdiv');
+    //     const alinks = div.getElementsByTagName('a');
+    //     Object.entries(alinks).map(link => {
+    //         if(link[1].classList.contains("text-primary")){
+    //             link[1].classList.remove("text-primary");
+    //         }
+    //         });
+    //     e.target.classList.add("text-primary");
+    // }
+    const {totalQuantity}=useStoreState((state)=>state)
 
     return (
         <>
-            <Topbar></Topbar>
+            <Topbar cartLength={totalQuantity}></Topbar>
             <NavBar></NavBar>
             <div className="container lg:grid grid-cols-12 items-start gap-6 pt-4 pb-16">
 
@@ -45,16 +50,16 @@ const Account = () => {
                     <div id="sidebarlinkdiv" className="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
 
                         <div className="space-y-1 pl-8">
-                            <Link to="" onClick={addActiveClass}
-                                className="relative text-base font-medium capitalize hover:text-primary transition block text-primary">
+                            <Link to=""
+                                className={`relative text-base font-medium capitalize hover:text-primary transition block ${location.pathname=="/myaccount" && "text-primary"}`}>
                                 Manage account
                                 <span className="absolute -left-8 top-0 text-base">
                                     <i className="far fa-address-card"></i>
                                 </span>
                             </Link>
-                            <Link to="profileinfo" onClick={addActiveClass} className="hover:text-primary transition capitalize block">Profile information</Link>
-                            <a href="manage-address.html" className="hover:text-primary transition capitalize block">Manage address</a>
-                            <a href="change-password.html" className="hover:text-primary transition capitalize block">change password</a>
+                            <Link to="profileinfo" className={`hover:text-primary transition capitalize block ${location.pathname=="/myaccount/profileinfo" && "text-primary"}`}>Profile information</Link>
+                            <a href="#" className="hover:text-primary transition capitalize block">Manage address</a>
+                            <a href="#" className="hover:text-primary transition capitalize block">change password</a>
                         </div>
 
                         <div className="space-y-1 pl-8 pt-4">
@@ -80,7 +85,7 @@ const Account = () => {
                         </div>
 
                         <div className="pl-8 pt-4">
-                            <Link to="wishlist" onClick={addActiveClass} className="relative medium capitalize text-gray-800 font-medium hover:text-primary transition block">
+                            <Link to="wishlist" className={`relative medium capitalize text-gray-800 font-medium hover:text-primary transition block ${location.pathname=="/myaccount/wishlist" && "text-primary"}`}>
                                 my wishlist
                                 <span className="absolute -left-8 top-0 text-base">
                                     <i className="far fa-heart"></i>

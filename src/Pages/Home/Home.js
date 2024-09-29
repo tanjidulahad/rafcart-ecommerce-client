@@ -6,11 +6,13 @@ import Products from '../../components/Products/Products';
 import NavBar from '../../components/shared/NavBar/NavBar';
 import Topbar from '../../components/shared/Topbar/Topbar';
 import { getStoredCart } from '../../utilities/localStorage/localStorage';
+import { useStoreState } from 'easy-peasy';
 
 const Home = () => {
-    const cart=getStoredCart();
-    var size = Object.values(cart).reduce((a, b) => a + b,0);
-    const [cartCount,setCartCount]=useState(size)
+    // const cart=getStoredCart();
+    // var size = Object.values(cart).reduce((a, b) => a + b,0);
+    // const [cartCount,setCartCount]=useState(size)
+    const cartCount=useStoreState((state)=>state.totalQuantity)
     return (
         <div>
             <Topbar cartLength={cartCount}></Topbar>

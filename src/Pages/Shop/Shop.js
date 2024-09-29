@@ -11,16 +11,17 @@ import product2 from '../../images/products/product2.jpg';
 import product3 from '../../images/products/product3.jpg';
 import product4 from '../../images/products/product4.jpg';
 import { getStoredCart } from '../../utilities/localStorage/localStorage';
+import { useStoreState } from 'easy-peasy';
 
 const Shop = () => {
-    const cart=getStoredCart();
-    var size = Object.values(cart).reduce((a, b) => a + b,0);
-    const [cartCount,setCartCount]=useState(size)
+    // const cart=getStoredCart();
+    // var size = Object.values(cart).reduce((a, b) => a + b,0);
+    // const [cartCount,setCartCount]=useState(size)
     const [allproducts, setallProducts] = useState([]);
     const [filteredProduct,setFilteredProduct]=useState([]);
     const [filterBy, setFilterBy] = useState([]);
     useEffect(() => {
-        fetch('https://rafcart-ecommerce-server-tanjidulahad.vercel.app/products')
+        fetch('https://rafcart-server.onrender.com/products')
             .then(res => res.json())
             .then(data => {
                 setallProducts(data);
@@ -47,6 +48,8 @@ const Shop = () => {
         }
         else{setFilteredProduct(allproducts)}
     }, [filterBy])
+
+    const cartCount=useStoreState((state)=>state.totalQuantity)
 
 
     return (
@@ -168,7 +171,7 @@ const Shop = () => {
                 <div className="col-span-3">
                     {allproducts.length > 0 ?
                         <div className="grid md:grid-cols-3 gap-6">
-                            {filteredProduct.map(product => <Product product={product} setCartCount={setCartCount}></Product>)}
+                            {filteredProduct.map(product => <Product product={product} ></Product>)}
                         </div>
                         : <Spinner></Spinner>
                     }

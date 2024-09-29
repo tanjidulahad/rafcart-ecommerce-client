@@ -9,8 +9,10 @@ import bed from '../../../images/icons/bed.svg';
 import office from '../../../images/icons/office.svg';
 import outdoor from '../../../images/icons/terrace.svg';
 import { Link } from 'react-router-dom';
+import useAuth from '../../../context/useAuth/useAuth';
 
 const NavBar = () => {
+    let {user} = useAuth();
     return (
         <>
             <div className="bg-gray-800 hidden lg:block">
@@ -56,7 +58,7 @@ const NavBar = () => {
                             <Link to="/about" className="text-gray-200 hover:text-white transition" >About Us</Link>
                             <Link to="/contact" className="text-gray-200 hover:text-white transition" >Contact Us</Link>
                         </div>
-                        <Link to="/login" className="text-gray-200 hover:text-white transition">Login/Register</Link>
+                        <Link to="/login" className={`text-gray-200 hover:text-white transition ${user.email ? "hidden":""}`}>Login/Register</Link>
                     </div>
                 </div>
             </div>

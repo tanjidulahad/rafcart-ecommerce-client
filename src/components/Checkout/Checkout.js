@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { clearTheCart } from '../../utilities/localStorage/localStorage';
 import NavBar from '../shared/NavBar/NavBar';
 import Topbar from '../shared/Topbar/Topbar';
+import { useStoreState } from 'easy-peasy';
 
 const Checkout = () => {
     const navigate=useNavigate();
@@ -25,10 +26,11 @@ const Checkout = () => {
         clearTheCart();
         navigate('/ordercomplete');
     }
+    const {totalQuantity}=useStoreState((state)=>state)
 
     return (
         <>
-            <Topbar></Topbar>
+            <Topbar cartLength={totalQuantity}></Topbar>
             <NavBar></NavBar>
             <div className="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
 

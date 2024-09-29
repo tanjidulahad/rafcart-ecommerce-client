@@ -62,6 +62,7 @@ export const useFirebase = () => {
             } else {
                 // User is signed out
                 // ...
+                setisLoading(false)
             }
         });
     }, [])

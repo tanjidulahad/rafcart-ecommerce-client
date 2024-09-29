@@ -10,7 +10,7 @@ const Products = () => {
     const [cartCount,setCartCount]=useState(size)
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch('https://rafcart-ecommerce-server-tanjidulahad.vercel.app/products')
+        fetch('https://rafcart-server.onrender.com/products')
             .then(res => res.json())
             .then(data => setProducts(data.reverse().slice(0, 8)))
     }, [])
